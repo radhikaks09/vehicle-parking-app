@@ -108,3 +108,22 @@ h1 {
     text-decoration: underline;
 }
 
+.role-switch {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+.role-switch a {
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.role-switch a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+

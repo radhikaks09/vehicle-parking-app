@@ -6,25 +6,33 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
+        <div class="role-switch">
+            {% if role == 'user' %}
+                <a href="/login/admin">Switch to Admin Login</a>
+            {% else %}
+                <a href="/login/user">Switch to User Login</a>
+            {% endif %}
+        </div>
+
         <div class="login-container">
             <h1>Login as {{role | capitalize}}</h1>
 
-        <form action="/login" method="POST" class="login-form">
-            <input type="hidden" name="role" value="{{role}}">
-            <label for="email">Registered Email ID:</label>
-            <input type="email" name="email" required>
-            <br>
-            <label for="password">Password:</label>
-            <input type="password" name="password" required>
-            <br>
-            <button type="submit">Login</button>
-        </form>
+            <form action="/login" method="POST" class="login-form">
+                <input type="hidden" name="role" value="{{role}}">
+                <label for="email">Registered Email ID:</label>
+                <input type="email" name="email" required>
+                <br>
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+            </form>
 
-        {% if role == 'user' %}
-            <div class="signup-link">
-                <a href="/signup">Create account?</a>
-            </div>
-        {% endif %}
+            {% if role == 'user' %}
+                <div class="signup-link">
+                    <a href="/signup">Create account?</a>
+                </div>
+            {% endif %}
         </div>
     </body>
 </html>

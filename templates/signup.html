@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>User Sign Up</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-  <div class="login-container">
-    <h1>Create a New Account</h1>
-    <form action="/signup" method="POST" class="login-form">
-      <label for="email">Email ID (Username):</label>
-      <input type="email" name="email" required>
+    <head>
+        <meta charset="UTF-8">
+        <title>User Sign Up</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div class="role-switch">
+            <a href="/login/admin">Switch to Admin Login</a>
+        </div>
+        
+        <div class="login-container">
+            <h1>Create a New Account</h1>
+            <form action="/signup" method="POST" class="login-form">
+                <label for="email">Email ID (Username):</label>
+                <input type="email" name="email" required>
 
-      <label for="password">Password:</label>
-      <input type="password" name="password" required>
+                <label for="password">Password:</label>
+                <input type="password" name="password" required>
 
-      <label for="name">Full Name:</label>
-      <input type="text" name="name" required>
+                <label for="name">Full Name:</label>
+                <input type="text" name="name" required>
 
-      <label for="address">Address:</label>
-      <textarea name="address" rows="4" cols="40" required></textarea>
+                <label for="address">Address:</label>
+                <textarea name="address" rows="4" cols="40" required></textarea>
 
-      <label for="pincode">Pincode:</label>
-      <input type="text" name="pincode" inputmode="numeric" maxlength="6" pattern="\d{6}" required>
+                <label for="pincode">Pincode:</label>
+                <input type="text" name="pincode" inputmode="numeric" maxlength="6" pattern="\d{6}" required>
 
-      <button type="submit">Register</button>
-    </form>
+                <button type="submit">Register</button>
+            </form>
 
-    <div class="signup-link">
-        <a href="/login/user">Login here!</a>
-    </div>
-  </div>
-</body>
+            <div class="signup-link">
+                <a href="/login/user">Login here!</a>
+            </div>
+        </div>
+    </body>
 </html>
