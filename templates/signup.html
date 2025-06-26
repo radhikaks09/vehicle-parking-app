@@ -22,7 +22,7 @@
       <textarea name="address" rows="4" cols="40" required></textarea>
 
       <label for="pincode">Pincode:</label>
-      <input type="number" name="pincode" required>
+      <input type="text" name="pincode" inputmode="numeric" maxlength="6" pattern="\d{6}" required>
 
       <button type="submit">Register</button>
     </form>
