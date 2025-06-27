@@ -127,3 +127,27 @@ h1 {
     color: #0056b3;
 }
 
+.logo-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo-center img {
+    max-width: 150px;
+    height: auto;
+}
+
+.logo-corner {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
+
+.logo-corner img {
+    max-width: 100px;
+    height: auto;
+}
+
+

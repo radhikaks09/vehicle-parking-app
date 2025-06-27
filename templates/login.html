@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{{role | capitalize}} Login</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
         <div class="role-switch">
@@ -12,6 +12,12 @@
             {% else %}
                 <a href="/login/user">Switch to User Login</a>
             {% endif %}
+        </div>
+
+        <div class="logo-corner">
+            <a href="/">
+                <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
+            </a>
         </div>
 
         <div class="login-container">

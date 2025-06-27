@@ -3,13 +3,19 @@
     <head>
         <meta charset="UTF-8">
         <title>User Sign Up</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
         <div class="role-switch">
             <a href="/login/admin">Switch to Admin Login</a>
         </div>
-        
+
+        <div class="logo-corner">
+            <a href="/">
+                <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
+            </a>
+        </div>
+
         <div class="login-container">
             <h1>Create a New Account</h1>
             <form action="/signup" method="POST" class="login-form">

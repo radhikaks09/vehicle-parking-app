@@ -3,10 +3,14 @@
     <head>
         <meta charset="UTF-8">
         <title>Welcome | Choose Role</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     </head>
     <body>
 
+        <div class="logo-center">
+            <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
+        </div>
+        
         <h1>Select Your Role</h1>
 
         <div class="role-options">
