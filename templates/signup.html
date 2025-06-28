@@ -7,7 +7,7 @@
     </head>
     <body>
         <div class="role-switch">
-            <a href="/login/admin">Switch to Admin Login</a>
+            <a href="/auth/login/admin">Switch to Admin Login</a>
         </div>
 
         <div class="logo-corner">
@@ -18,7 +18,7 @@
 
         <div class="login-container">
             <h1>Create a New Account</h1>
-            <form action="/signup" method="POST" class="login-form">
+            <form action="/auth/signup" method="POST" class="login-form">
                 <label for="email">Email ID (Username):</label>
                 <input type="email" name="email" required>
 
@@ -38,7 +38,7 @@
             </form>
 
             <div class="signup-link">
-                <a href="/login/user">Login here!</a>
+                <a href="/auth/login/user">Login here!</a>
             </div>
         </div>
     </body>

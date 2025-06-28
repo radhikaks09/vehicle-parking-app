@@ -8,9 +8,9 @@
     <body>
         <div class="role-switch">
             {% if role == 'user' %}
-                <a href="/login/admin">Switch to Admin Login</a>
+                <a href="/auth/login/admin">Switch to Admin Login</a>
             {% else %}
-                <a href="/login/user">Switch to User Login</a>
+                <a href="/auth/login/user">Switch to User Login</a>
             {% endif %}
         </div>
 
@@ -23,7 +23,7 @@
         <div class="login-container">
             <h1>Login as {{role | capitalize}}</h1>
 
-            <form action="/login" method="POST" class="login-form">
+            <form action="/auth/login/{{role}}" method="POST" class="login-form">
                 <input type="hidden" name="role" value="{{role}}">
                 <label for="email">Registered Email ID:</label>
                 <input type="email" name="email" required>
@@ -36,7 +36,7 @@
 
             {% if role == 'user' %}
                 <div class="signup-link">
-                    <a href="/signup">Create account?</a>
+                    <a href="/auth/signup">Create account?</a>
                 </div>
             {% endif %}
         </div>
