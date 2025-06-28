@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Welcome | Choose Role</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
-    <body>
+{% extends "base.html" %}
 
-        <div class="logo-center">
-            <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
-        </div>
+{% block title %}Welcome | Choose Role{% endblock %}
 
-        <h1>Select Your Role</h1>
+{% block content %}
+    <div class="logo-center">
+        <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
+    </div>
 
-        <div class="role-options">
-            <a href="/auth/login/admin" class="option">Admin</a>
-            <a href="/auth/login/user" class="option">User</a>
-        </div>
+    <h1>Select Your Role</h1>
 
-    </body>
-</html>
+    <div class="role-options">
+        <a href="/auth/login/admin" class="option">Admin</a>
+        <a href="/auth/login/user" class="option">User</a>
+    </div>
+{% endblock %}

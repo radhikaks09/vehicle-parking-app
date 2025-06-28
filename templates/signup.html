@@ -1,45 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>User Sign Up</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
-    <body>
-        <div class="role-switch">
-            <a href="/auth/login/admin">Switch to Admin Login</a>
+{% extends "base.html" %}
+
+{% block title %}User Sign Up{% endblock %}
+
+{% block content %}
+    <div class="role-switch">
+        <a href="/auth/login/admin">Switch to Admin Login</a>
+    </div>
+
+    <div class="logo-corner">
+        <a href="/">
+            <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
+        </a>
+    </div>
+
+    <div class="login-container">
+        <h1>Create a New Account</h1>
+        <form action="/auth/signup" method="POST" class="login-form">
+            <label for="name">Full Name:</label>
+            <input type="text" name="name" required>
+
+            <label for="email">Email ID (Username):</label>
+            <input type="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+
+            <label for="address">Address:</label>
+            <textarea name="address" rows="4" cols="40" required></textarea>
+
+            <label for="pincode">Pincode:</label>
+            <input type="text" name="pincode" inputmode="numeric" maxlength="6" pattern="\d{6}" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <div class="signup-link">
+            <a href="/auth/login/user">Login here!</a>
         </div>
-
-        <div class="logo-corner">
-            <a href="/">
-                <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
-            </a>
-        </div>
-
-        <div class="login-container">
-            <h1>Create a New Account</h1>
-            <form action="/auth/signup" method="POST" class="login-form">
-                <label for="email">Email ID (Username):</label>
-                <input type="email" name="email" required>
-
-                <label for="password">Password:</label>
-                <input type="password" name="password" required>
-
-                <label for="name">Full Name:</label>
-                <input type="text" name="name" required>
-
-                <label for="address">Address:</label>
-                <textarea name="address" rows="4" cols="40" required></textarea>
-
-                <label for="pincode">Pincode:</label>
-                <input type="text" name="pincode" inputmode="numeric" maxlength="6" pattern="\d{6}" required>
-
-                <button type="submit">Register</button>
-            </form>
-
-            <div class="signup-link">
-                <a href="/auth/login/user">Login here!</a>
-            </div>
-        </div>
-    </body>
-</html>
+    </div>
+{% endblock %}

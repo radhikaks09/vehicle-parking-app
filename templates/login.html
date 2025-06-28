@@ -1,44 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>{{role | capitalize}} Login</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
-    <body>
-        <div class="role-switch">
-            {% if role == 'user' %}
-                <a href="/auth/login/admin">Switch to Admin Login</a>
-            {% else %}
-                <a href="/auth/login/user">Switch to User Login</a>
-            {% endif %}
-        </div>
+{% extends "base.html" %}
 
-        <div class="logo-corner">
-            <a href="/">
-                <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
-            </a>
-        </div>
+{% block title %}{{ role | capitalize }} Login{% endblock %}
 
-        <div class="login-container">
-            <h1>Login as {{role | capitalize}}</h1>
+{% block content %}
+    <div class="role-switch">
+        {% if role == 'user' %}
+            <a href="/auth/login/admin">Switch to Admin Login</a>
+        {% else %}
+            <a href="/auth/login/user">Switch to User Login</a>
+        {% endif %}
+    </div>
 
-            <form action="/auth/login/{{role}}" method="POST" class="login-form">
-                <input type="hidden" name="role" value="{{role}}">
-                <label for="email">Registered Email ID:</label>
-                <input type="email" name="email" required>
-                <br>
-                <label for="password">Password:</label>
-                <input type="password" name="password" required>
-                <br>
-                <button type="submit">Login</button>
-            </form>
+    <div class="logo-corner">
+        <a href="/">
+            <img src="{{ url_for('static', filename='images/parked.png') }}" alt="Parked.">
+        </a>
+    </div>
 
-            {% if role == 'user' %}
-                <div class="signup-link">
-                    <a href="/auth/signup">Create account?</a>
-                </div>
-            {% endif %}
-        </div>
-    </body>
-</html>
+    <div class="login-container">
+        <h1>Login as {{role | capitalize}}</h1>
+
+        <form action="/auth/login/{{role}}" method="POST" class="login-form">
+            <input type="hidden" name="role" value="{{role}}">
+            <label for="email">Registered Email ID:</label>
+            <input type="email" name="email" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+            <br>
+            <button type="submit">Login</button>
+        </form>
+
+        {% if role == 'user' %}
+            <div class="signup-link">
+                <a href="/auth/signup">Create account?</a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
