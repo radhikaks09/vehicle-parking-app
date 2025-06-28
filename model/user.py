@@ -1,4 +1,5 @@
 from model import db
+from model.parking import Reservation
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -10,3 +11,5 @@ class User(db.Model):
     address = db.Column(db.String(200), nullable=False)
     pincode = db.Column(db.String(6), nullable=False)
     role = db.Column(db.String(10), nullable=False, default='user')
+
+    reservations = db.relationship('Reservation', backref='user', lazy=True)
