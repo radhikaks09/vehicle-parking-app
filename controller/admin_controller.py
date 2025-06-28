@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from model import db
 from model.user import User
-from model.parking import ParkingLot, ParkingSpot, Reservation
+from model.parking import ParkingLot, ParkingSpot
 from datetime import datetime
 
 admin = Blueprint('admin', __name__)
@@ -62,7 +62,7 @@ def edit_lot(lot_id):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            flash(f"Error updating parking lot: {str(e)}", "error")
+            flash(f"Error updating parking lot", "error")
 
         flash("Parking lot updated successfully!", "success")
         return redirect(url_for('admin.dashboard'))

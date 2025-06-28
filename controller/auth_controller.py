@@ -15,7 +15,8 @@ def login(role):
 
         if user and check_password_hash(user.password, password):
             flash(f"{role.capitalize()} login successful!", "success")
-            return redirect(url_for(f'{role}.dashboard', role=role, name=user.name))
+            session['current_user_id'] = user.id
+            return redirect(url_for(f'{role}.dashboard', role=role))
         else:
             flash(f"Invalid {role} credentials!", "error")
             return render_template("login.html", role=role)

@@ -1,0 +1,43 @@
+{% extends "dashboard.html" %}
+
+{% block main_dashboard %}
+    <div class="card">
+        <h2>Welcome, {{ current_user.name }}!</h2>
+        <p>This is your {{ role }} dashboard.</p>
+    </div>
+    <h2>All Parking Lots</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Pincode</th>
+                <th>Total Spots</th>
+                <th>Available Spots</th>
+                <th>Price/Hour</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lot in parking_lots %}
+                <tr>
+                    <td>{{ lot.id }}</td>
+                    <td>{{ lot.name }}</td>
+                    <td>{{ lot.location }}</td>
+                    <td>{{ lot.pincode }}</td>
+                    <td>{{ lot.total_spots }}</td>
+                    <td>{{ lot.spots | selectattr("is_occupied", "equalto", False) | list | length }}</td>
+                    <td>{{ lot.price_per_hour }}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <a href="{{ url_for('user.reserve_spot', lot_id=lot.id) }}"><button>Reserve</button></a>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

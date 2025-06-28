@@ -1,0 +1,24 @@
+{% extends "dashboard.html" %}
+
+{% block title %}Reserve Spot{% endblock %}
+
+{% block main_dashboard %}
+    <div class="card">
+        <h2>Parking Spot in Lot: {{ lot.name }}</h2>
+        <p>Location: {{ lot.location }} | Pincode: {{ lot.pincode }}</p>
+        <p>Alloted Spot: {{ spot.number }}</p>
+        <p>Price per Hour: ₹{{ lot.price_per_hour }}</p>
+    </div>
+    <div class="form-container">
+        <form action="{{ url_for('user.reserve_spot', lot_id=lot.id) }}" method="POST">
+            <div class="form-group">
+                <label for="vehicle_number">Vehicle Number:</label>
+                <input type="text" name="vehicle_number" required>
+            </div>
+            <div class="action-buttons">
+                <button type="submit">Confirm Reservation</button>
+                <a href="{{ url_for('user.dashboard') }}"><button type="button">Cancel</button></a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

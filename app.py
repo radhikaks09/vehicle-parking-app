@@ -4,6 +4,7 @@ from model.user import User
 from werkzeug.security import generate_password_hash
 from controller.auth_controller import auth
 from controller.admin_controller import admin
+from controller.user_controller import user
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('config.py')
@@ -12,6 +13,7 @@ db.init_app(app)
 
 app.register_blueprint(auth, url_prefix='/auth')
 app.register_blueprint(admin, url_prefix='/admin')
+app.register_blueprint(user, url_prefix='/user')
 
 def create_admin():
     with app.app_context():

@@ -8,10 +8,10 @@
                 <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
                 <a href="{{ url_for('admin.view_users') }}">Users</a>
                 <a href="{{ url_for('admin.parking_summary') }}">Summary</a>
-            {# {% else %}
+            {% else %}
                 <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
-                <a href="{{ url_for('user.reserve') }}">Reserve Spot</a>
-                <a href="{{ url_for('user.my_reservations') }}">My Reservations</a> #}
+                <a href="{{ url_for('user.my_reservations') }}">My Reservations</a>
+                <a href="{{url_for('user.booking_summary')}}">Summary</a>
             {% endif %}
             <a href="{{ url_for('auth.logout') }}">Logout</a>
         </nav>
