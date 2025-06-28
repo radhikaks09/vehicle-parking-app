@@ -3,6 +3,7 @@ from model import db
 from model.user import User
 from werkzeug.security import generate_password_hash
 from controller.auth_controller import auth
+from controller.admin_controller import admin
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.from_pyfile('config.py')
@@ -10,6 +11,7 @@ app.config.from_pyfile('config.py')
 db.init_app(app)
 
 app.register_blueprint(auth, url_prefix='/auth')
+app.register_blueprint(admin, url_prefix='/admin')
 
 def create_admin():
     with app.app_context():
@@ -28,10 +30,6 @@ def create_admin():
 @app.route('/')
 def default():
     return render_template("landing.html")
-
-@app.route('/dashboard')
-def dashboard():
-    return render_template("dashboard.html")
 
 if __name__ == '__main__':
     with app.app_context():

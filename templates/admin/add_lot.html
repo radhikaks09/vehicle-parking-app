@@ -1,0 +1,42 @@
+{% extends "dashboard.html" %}
+
+{% block title %}Add Lot{% endblock %}
+
+{% block main_dashboard %}
+    <div class="form-container">
+        <h2>Add New Parking Lot</h2>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="id">Lot ID</label>
+                <input type="text" name="id" id="id" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Lot Name</label>
+                <input type="text" name="name" id="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" name="location" id="location" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" name="pincode" id="pincode" required pattern="\d{6}">
+            </div>
+
+            <div class="form-group">
+                <label for="total_spots">Total Spots</label>
+                <input type="number" name="total_spots" id="total_spots" required min="1">
+            </div>
+
+            <div class="form-group">
+                <label for="price_per_hour">Price per Hour (₹)</label>
+                <input type="number" name="price_per_hour" id="price_per_hour" step="0.01" required>
+            </div>
+
+            <button type="submit" class="button">Add Lot</button>
+        </form>
+    </div>
+{% endblock %}

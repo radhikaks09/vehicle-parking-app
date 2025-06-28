@@ -1,0 +1,38 @@
+{% extends "dashboard.html" %}
+
+{% block title %}Edit Lot{% endblock %}
+
+{% block main_dashboard %}
+    <div class="form-container">
+        <h2>Edit Parking Lot</h2>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="id">Lot ID</label>
+                <input type="text" name="id" id="id" value="{{ lot.id }}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="name">Lot Name</label>
+                <input type="text" name="name" id="name" value="{{ lot.name }}" required>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" name="location" id="location" value="{{ lot.location }}" required>
+            </div>
+            <div class="form-group">
+                <label for="pincode">Pincode</label>
+                <input type="text" name="pincode" id="pincode" value="{{ lot.pincode }}" required pattern="\d{6}">
+            </div>
+            <div class="form-group">
+                <label for="total_spots">Total Spots</label>
+                <input type="number" name="total_spots" id="total_spots" value="{{ lot.total_spots }}" required min="1">
+            </div>
+            <div class="form-group">
+                <label for="price_per_hour">Price per Hour (₹)</label>
+                <input type="number" name="price_per_hour" id="price_per_hour" step="0.01" value="{{ lot.price_per_hour }}" required>
+            </div>
+
+            <button type="submit">Update</button>
+        </form>
+    </div>
+{% endblock %}

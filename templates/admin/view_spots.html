@@ -1,0 +1,66 @@
+{% extends "dashboard.html" %}
+
+{% block title %}View Parking Spots{% endblock %}
+
+{% block main_dashboard %}
+    <div class="card">
+        <h2>Parking Spots in Lot: {{ lot.name }}</h2>
+        <p>Location: {{ lot.location }} | Pincode: {{ lot.pincode }}</p>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Spot Number</th>
+                <th>Status</th>
+                <th>User</th>
+                <th>Vehicle Details</th>
+                <th>Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for spot in spots %}
+                <tr>
+                    <td>{{ spot.spot_number }}</td>
+                    <td>
+                        {% if spot.is_occupied %}
+                            <span style="color: red;">Occupied</span>
+                        {% else %}
+                            <span style="color: green;">Available</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if spot.is_occupied %}
+                            {% set active_res = spot.reservations | selectattr('is_active') | first %}
+                            {{ active_res.user.name if active_res else 'Unknown' }}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ spot.vehicle_details if spot.is_occupied else '—' }}
+                    </td>
+                    <td>
+                        {% if spot.is_occupied %}
+                            {% set active_res = spot.reservations | selectattr('is_active') | first %}
+                            {% if active_res %}
+                                {% set duration = (now - active_res.start_time).total_seconds() %}
+                                {% set hours = duration // 3600 %}
+                                {% set minutes = (duration % 3600) // 60 %}
+                                {{ hours | int }}h {{ minutes | int }}m
+                            {% else %}
+                                —
+                            {% endif %}
+                        {% else %}
+                            —
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('admin.dashboard') }}"><button>Back to Dashboard</button></a>
+    </div>
+{% endblock %}

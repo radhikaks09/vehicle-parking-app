@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, render_template, session, request, redirect, url_for, flash
 from model import db
 from model.user import User
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -15,7 +15,7 @@ def login(role):
 
         if user and check_password_hash(user.password, password):
             flash(f"{role.capitalize()} login successful!", "success")
-            return redirect(url_for('dashboard', role=role))
+            return redirect(url_for(f'{role}.dashboard', role=role, name=user.name))
         else:
             flash(f"Invalid {role} credentials!", "error")
             return render_template("login.html", role=role)
@@ -32,7 +32,12 @@ def signup():
         pincode = request.form.get('pincode')
 
         try:
-            new_user = User(name=name, email=email, password=generate_password_hash(password), address=address, pincode=pincode)
+            new_user = User(
+                name=name, 
+                email=email, 
+                password=generate_password_hash(password), 
+                address=address, 
+                pincode=pincode)
             db.session.add(new_user)
             db.session.commit()
         except Exception as e:
@@ -44,3 +49,9 @@ def signup():
         return redirect(url_for('auth.login', role='user'))
     
     return render_template("signup.html")
+
+@auth.route('/logout')
+def logout():
+    session.clear()
+    flash("You have been logged out successfully.", "success")
+    return redirect(url_for('default'))

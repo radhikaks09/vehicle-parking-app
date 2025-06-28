@@ -1,22 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Dashboard</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    </head>
-    <body>
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul class="flashes">
-                {% for category, message in messages %}
-                    <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-                </ul>
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <header>
+        <h1>{{ role.capitalize() }} Dashboard</h1>
+        <nav>
+            {% if role == 'admin' %}
+                <a href="{{ url_for('admin.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('admin.view_users') }}">Users</a>
+                <a href="{{ url_for('admin.parking_summary') }}">Summary</a>
+            {# {% else %}
+                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('user.reserve') }}">Reserve Spot</a>
+                <a href="{{ url_for('user.my_reservations') }}">My Reservations</a> #}
             {% endif %}
-        {% endwith %}
-        
-        <h1>Dashboard</h1>
-    </body>
-</html>
+            <a href="{{ url_for('auth.logout') }}">Logout</a>
+        </nav>
+    </header>
+    <main>
+        {% block main_dashboard %}
+        {% endblock %}
+    </main>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "dashboard.html" %}
+
+{% block title %}View Users{% endblock %}
+
+{% block main_dashboard %}
+    <div class="card">
+        <h2>Registered Users</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Full Name</th>
+                <th>Email ID</th>
+                <th>Pincode</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ user.name}}</td>
+                    <td>{{ user.email}}</td>
+                    <td>{{ user.pincode }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('admin.dashboard') }}"><button>Back to Dashboard</button></a>
+    </div>
+
+{% endblock %}
