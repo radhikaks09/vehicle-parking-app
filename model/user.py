@@ -1,5 +1,4 @@
 from model import db
-from model.parking import Reservation
 
 class User(db.Model):
     __tablename__ = 'users'

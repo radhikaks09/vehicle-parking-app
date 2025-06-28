@@ -1,5 +1,4 @@
 from model import db
-from model.user import User
 
 class ParkingLot(db.Model):
     __tablename__ = 'parking_lots'
@@ -32,5 +31,4 @@ class Reservation(db.Model):
     end_time = db.Column(db.DateTime)
     is_active = db.Column(db.Boolean, default=True)
 
-    user = db.relationship('User', backref='reservations')
     spot = db.relationship('ParkingSpot', backref='reservations')
