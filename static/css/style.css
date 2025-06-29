@@ -210,13 +210,6 @@ header {
     height: 70px;
 }
 
-/* header h1 {
-    margin: 0;
-    line-height: 1.2;
-    font-size: 1.8rem;
-    font-weight: 600;
-} */
-
 .logo-title {
     display: flex;
     align-items: center;
