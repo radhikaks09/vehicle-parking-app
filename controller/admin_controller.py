@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from model import db
 from model.user import User
-from model.parking import ParkingLot, ParkingSpot
+from model.parking import ParkingLot, ParkingSpot, Reservation
 from datetime import datetime
 
 admin = Blueprint('admin', __name__)
@@ -101,4 +101,16 @@ def view_users():
 
 @admin.route('/parking-summary')
 def parking_summary():
-    return
+    total_users = User.query.count()
+    total_lots = ParkingLot.query.count()
+    
+    completed_reservations = Reservation.query.filter(Reservation.is_active == False).all()
+    total_revenue = 0
+    for res in completed_reservations:
+        if res.end_time:
+            duration = (res.end_time - res.start_time).total_seconds() / 3600
+            lot = ParkingLot.query.get(res.spot.lot_id)
+            total_revenue += duration * lot.price_per_hour
+
+    return render_template('admin/parking_summary.html', total_users=total_users, total_lots=total_lots, 
+                           total_revenue=round(total_revenue, 2), role='admin')

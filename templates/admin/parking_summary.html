@@ -1,0 +1,44 @@
+{% extends "dashboard.html" %}
+{% block title %}Admin Summary{% endblock %}
+
+{% block main_dashboard %}
+    <div class="card">
+        <h2>Admin Stats Summary</h2>
+        <canvas id="adminSummaryChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('adminSummaryChart').getContext('2d');
+        const adminChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Stats'],
+                datasets: [{
+                    label: 'Users',
+                    data: ['{{ total_users }}'],
+                    backgroundColor: '#d22b2b',
+                }, {
+                    label: 'Parking Lots',
+                    data: ['{{ total_lots }}'],
+                    backgroundColor: '#228b22',
+                }, {
+                    label: 'Revenue',
+                    data: ['{{ total_revenue }}'],
+                    backgroundColor: '#f59e0b',
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock %}

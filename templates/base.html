@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title>{% block title %}Vehicle Parking App{% endblock %}</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body>
         {% with messages = get_flashed_messages(with_categories=true) %}

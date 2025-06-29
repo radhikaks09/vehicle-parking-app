@@ -1,0 +1,31 @@
+{% extends "dashboard.html" %}
+{% block title %}My Summary{% endblock %}
+
+{% block main_dashboard %}
+    <div class="card">
+        <h2>My Reservation Summary</h2>
+        <canvas id="userSummaryChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+    const ctx = document.getElementById('userSummaryChart').getContext('2d');
+    const userChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Active', 'Past'],
+            datasets: [{
+                label: 'Reservations',
+                data: ['{{ active_reservations }}', '{{ past_reservations }}'],
+                backgroundColor: ['#228b22', '#f59e0b'],
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+    </script>
+{% endblock %}

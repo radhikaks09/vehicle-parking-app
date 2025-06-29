@@ -69,15 +69,14 @@ def release_spot(lot_id, spot_number):
     end_time = datetime.utcnow()
 
     if request.method == 'POST':
+        reservation.end_time = end_time
+        reservation.is_active = False
+        spot.is_occupied = False
+
+        duration = (end_time - reservation.start_time).total_seconds() / 3600
+        lot = ParkingLot.query.get(spot.lot_id)
+        cost = round(duration * lot.price_per_hour, 2)
         try:
-            reservation.end_time = end_time
-            reservation.is_active = False
-            spot.is_occupied = False
-
-            duration = (end_time - reservation.start_time).total_seconds() / 3600
-            lot = ParkingLot.query.get(spot.lot_id)
-            cost = round(duration * lot.price_per_hour, 2)
-
             db.session.commit()
         except Exception as e:
             db.session.rollback()
@@ -104,4 +103,10 @@ def my_reservations():
 
 @user.route('/booking-summary')
 def booking_summary():
-    return
+    user_id = session.get('current_user_id')
+    active_reservations = Reservation.query.filter_by(user_id=user_id, is_active=True).count()
+    past_reservations = Reservation.query.filter_by(user_id=user_id, is_active=False).count()
+    total_reservations = active_reservations + past_reservations
+
+    return render_template('user/booking_summary.html', active_reservations=active_reservations, 
+                           past_reservations=past_reservations, total_reservations=total_reservations, role='user')
