@@ -58,16 +58,49 @@ def reserve_spot(lot_id):
     
     return render_template('user/reserve.html', spot=spot, lot=lot, role='user')
 
-@user.route('/release-spot/<int:lot_id>/<int:spot_number>', methods=['POST'])
+@user.route('/release-spot/<int:lot_id>/<int:spot_number>', methods=['GET', 'POST'])
 def release_spot(lot_id, spot_number):
-    return
+    user_id = session.get('current_user_id')
+    user = User.query.get_or_404(user_id)
+
+    spot = ParkingSpot.query.filter_by(lot_id=lot_id, spot_number=spot_number).first_or_404()
+    reservation = Reservation.query.filter_by(user_id=user.id, spot_id=spot.id, is_active=True).first_or_404()
+
+    end_time = datetime.utcnow()
+
+    if request.method == 'POST':
+        try:
+            reservation.end_time = end_time
+            reservation.is_active = False
+            spot.is_occupied = False
+
+            duration = (end_time - reservation.start_time).total_seconds() / 3600
+            lot = ParkingLot.query.get(spot.lot_id)
+            cost = round(duration * lot.price_per_hour, 2)
+
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            flash("Error releasing spot", "error")
+            return render_template('user/release.html', spot=spot, reservation=reservation, role='user')
+        
+        flash(f"Spot released. Duration: {duration:.2f} hours. Cost: ₹{cost}", "success")
+        return redirect(url_for('user.dashboard'))
+    
+    duration = (datetime.utcnow() - reservation.start_time).total_seconds() / 3600
+    lot = ParkingLot.query.get(spot.lot_id)
+    cost = round(duration * lot.price_per_hour, 2)
+
+    return render_template('user/release.html', spot=spot, reservation=reservation, end_time=end_time, cost=cost, role='user')
 
 @user.route('/my-reservations', methods=['GET'])
 def my_reservations():
     user_id = session.get('current_user_id')
     active_reservations = Reservation.query.filter_by(user_id=user_id, is_active=True).all()
     past_reservations = Reservation.query.filter_by(user_id=user_id, is_active=False).all()
-    return render_template('user/my_reservations.html', active_reservations=active_reservations, past_reservations=past_reservations, role='user')
+    current_time = datetime.utcnow()
+    return render_template('user/my_reservations.html', active_reservations=active_reservations, past_reservations=past_reservations, 
+                           current_time=current_time, role='user')
 
 @user.route('/booking-summary')
 def booking_summary():

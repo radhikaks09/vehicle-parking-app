@@ -10,48 +10,67 @@
     <table>
         <thead>
             <tr>
+                <th>Lot Name</th>
                 <th>Spot Number</th>
                 <th>Status</th>
+                <th>Start Time</th>
+                <th>Duration (hrs)</th>
+                <th>Cost</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            {% for spot in spots %}
-                {% set active_res = spot.reservations | selectattr('is_active') | first %}
+            {% for res in active_reservations %}
+                {% set duration = (current_time - res.start_time).total_seconds() / 3600 %}
                 <tr>
-                    <td>{{ spot.spot_number }}</td>
+                    <td>{{ res.spot.lot.name }}</td>
+                    <td>{{ res.spot.spot_number }}</td>
                     <td>
-                        {% if spot.is_occupied %}
-                            {% if active_res and active_res.user_id == current_user_id %}
-                                <span style="color: orange;">Reserved</span>
-                            {% else %}
-                                <span style="color: red;">Occupied</span>
-                            {% endif %}
-                        {% else %}
-                            <span style="color: green;">Available</span>
-                        {% endif %}
+                        <span style="color: orange;">Reserved</span>
                     </td>
+                    <td>{{ res.start_time.strftime('%d-%m-%Y %H:%M') }}</td>
+                    <td>{{ duration | round(2) }}</td>
+                    <td>₹{{ (duration * res.spot.lot.price_per_hour) | round(2) }}</td>
                     <td>
-                        {% if not spot.is_occupied %}
-                            <a href="{{ url_for('user.reserve_spot', lot_id=lot.id, spot_number=spot.spot_number) }}">
-                                <button>Reserve</button>
-                            </a>
-                        {% else %}
-                            {% if active_res and active_res.user_id == current_user_id %}
-                                <a href="{{ url_for('user.release_spot', lot_id=lot.id, spot_number=spot.spot_number) }}">
-                                    <button>Release</button>
-                                </a>
-                            {% else %}
-                                <span style="color: gray;">Cannot Book</span>
-                            {% endif %}
-                        {% endif %}
+                        <a href="{{ url_for('user.release_spot', lot_id=res.spot.lot.id, spot_number=res.spot.spot_number) }}">
+                            <button>Release</button>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
 
+    <div class="card">
+        <h2>Past Reservations</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Lot Name</th>
+                <th>Spot Number</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Duration (hrs)</th>
+                <th>Total Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for res in past_reservations %}
+                {% set duration = (res.end_time - res.start_time).total_seconds() / 3600 %}
+                <tr>
+                    <td>{{ res.spot.lot.name }}</td>
+                    <td>{{ res.spot.spot_number }}</td>
+                    <td>{{ res.start_time.strftime('%d-%m-%Y %H:%M') }}</td>
+                    <td>{{ res.end_time.strftime('%d-%m-%Y %H:%M') }}</td>
+                    <td>{{ duration | round(2) }}</td>
+                    <td>₹{{ (duration * res.spot.lot.price_per_hour) | round(2) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
     <div style="margin-top: 20px;">
-        <a href="{{ url_for('admin.dashboard') }}"><button>Back to Dashboard</button></a>
+        <a href="{{ url_for('user.dashboard') }}"><button>Back to Dashboard</button></a>
     </div>
 {% endblock %}

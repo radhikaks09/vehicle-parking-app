@@ -1,0 +1,27 @@
+{% extends "dashboard.html" %}
+
+{% block title %}Release Spot{% endblock %}
+
+{% block main_dashboard %}
+    <card class="card">
+        <h2>Parking Spot in Lot: {{ spot.lot.name }}</h2>
+        {% set duration = (end_time - reservation.start_time).total_seconds() / 3600 %}
+        {% set total_cost = duration * spot.lot.price_per_hour %}
+        <p>Location: {{ spot.lot.location }} | Pincode: {{ spot.lot.pincode }}</p>
+        <p>Alloted Spot: {{ spot.spot_number }}</p>
+        <p>Price per Hour: ₹{{ spot.lot.price_per_hour }}</p>
+        <p>Duration: {{ duration | round(2) }} hour{{ 's' if duration_hours != 1 else '' }}</p>
+        <p>Total Cost: ₹{{ total_cost | round(2) }}</p>
+    </card>
+    <div class="form-container">
+        <form action="{{ url_for('user.release_spot', lot_id=spot.lot.id, spot_number=spot.spot_number) }}" method="POST">
+            <div class="action-buttons">
+                <button type="submit">Confirm Release</button>
+                <a href="{{ url_for('user.dashboard') }}"><button type="button">Cancel</button></a>
+            </div>
+        </form>
+    </div>
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('user.dashboard') }}"><button>Back to Dashboard</button></a>
+    </div>
+{% endblock %}
