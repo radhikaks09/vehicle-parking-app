@@ -183,7 +183,6 @@ h2 {
     border: 1px solid #f5c6cb;
 }
 
-/* Reset */
 * {
     margin: 0;
     padding: 0;
@@ -211,11 +210,29 @@ header {
     height: 70px;
 }
 
-header h1 {
+/* header h1 {
     margin: 0;
     line-height: 1.2;
     font-size: 1.8rem;
     font-weight: 600;
+} */
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-title h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.dashboard-icon {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
 }
 
 nav a {
