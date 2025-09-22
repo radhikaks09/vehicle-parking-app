@@ -13,11 +13,18 @@
         type: 'pie',
         data: {
             labels: ['Active', 'Past'],
-            datasets: [{
-                label: 'Reservations',
-                data: ['{{ active_reservations }}', '{{ past_reservations }}'],
-                backgroundColor: ['#228b22', '#f59e0b'],
-            }]
+            datasets: [
+                {
+                    label: 'Reservations',
+                    data: ['{{ no_of_active_reservations }}', '{{ no_of_past_reservations }}'],
+                    backgroundColor: ['#228b22', '#f59e0b'],
+                },
+                {
+                    label: 'Amount (₹)',
+                    data: ['{{ total_active_cost }}', '{{ total_past_cost }}'],
+                    backgroundColor: ['#228b22', '#f59e0b'],
+                }
+            ]
         },
         options: {
             plugins: {

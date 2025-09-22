@@ -101,7 +101,7 @@ def view_users():
 
 @admin.route('/parking-summary')
 def parking_summary():
-    total_users = User.query.count()
+    total_users = User.query.count() - 1
     total_lots = ParkingLot.query.count()
     
     completed_reservations = Reservation.query.filter(Reservation.is_active == False).all()

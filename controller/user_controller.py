@@ -104,9 +104,24 @@ def my_reservations():
 @user.route('/booking-summary')
 def booking_summary():
     user_id = session.get('current_user_id')
-    active_reservations = Reservation.query.filter_by(user_id=user_id, is_active=True).count()
-    past_reservations = Reservation.query.filter_by(user_id=user_id, is_active=False).count()
-    total_reservations = active_reservations + past_reservations
+    active_reservations = Reservation.query.filter_by(user_id=user_id, is_active=True)
+    past_reservations = Reservation.query.filter_by(user_id=user_id, is_active=False)
+    total_reservations = active_reservations.count() + past_reservations.count()
 
-    return render_template('user/booking_summary.html', active_reservations=active_reservations, 
-                           past_reservations=past_reservations, total_reservations=total_reservations, role='user')
+    total_active_cost = 0
+    for res in active_reservations:
+        duration = (datetime.utcnow() - res.start_time).total_seconds() / 3600
+        lot = ParkingLot.query.get(res.spot.lot_id)
+        total_active_cost += duration * lot.price_per_hour
+
+    total_past_cost = 0
+    for res in past_reservations:
+        if res.end_time:
+            duration = (res.end_time - res.start_time).total_seconds() / 3600
+            lot = ParkingLot.query.get(res.spot.lot_id)
+            total_past_cost += duration * lot.price_per_hour
+
+
+    return render_template('user/booking_summary.html', no_of_active_reservations=active_reservations.count(), 
+                           no_of_past_reservations=past_reservations.count(), total_reservations=total_reservations, 
+                           total_active_cost=total_active_cost, total_past_cost=total_past_cost, role='user')
